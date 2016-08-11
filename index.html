@@ -19,18 +19,11 @@
         <script src="https://cdn.rawgit.com/mayotunde/qgis2leaflet/master/Autolinker.min.js"></script>
         <script src="http://k4r573n.github.io/leaflet-control-osm-geocoder/Control.OSMGeocoder.js"></script>
         <script src="https://cdn.rawgit.com/mayotunde/qgis2leaflet/master/leaflet.markercluster.js"></script>
-        <style>
-        html, body, #map {
-            width: 70%;
-            height: 70%;
-            padding: 0;
-            margin: 0;
-        }
-        </style>
+        
         <title></title>
     </head>
     <body>
-        <div id="map">
+        <div id="map" style="width:700px;height:500px">
         </div>
         <script src="https://cdn.rawgit.com/mayotunde/qgis2leaflet/master/json_ibadanschools0.js"></script>
         <script src="https://cdn.rawgit.com/mayotunde/qgis2leaflet/master/json_Cluster1.js"></script>
@@ -54,7 +47,7 @@
         var bounds_group = new L.featureGroup([]);
         var raster_group = new L.LayerGroup([]);
         var basemap0 = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            attribution: '&copy; <a href="http://mapsnigeriainitiative.com">mapsnigeriainitiative</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,<a href="http://openstreetmaps.org">openstreetmaps</a>',
             maxZoom: 28
         });
         basemap0.addTo(map);
@@ -91,7 +84,6 @@
             var popupContent = '<table><tr><td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(String(feature.properties['Id'])) : '') + '</td></tr><tr><td colspan="2"><strong>Type</strong><br />' + (feature.properties['Type'] !== null ? Autolinker.link(String(feature.properties['Type'])) : '') + '</td></tr><tr><th scope="row">Category</th><td>' + (feature.properties['Category'] !== null ? Autolinker.link(String(feature.properties['Category'])) : '') + '</td></tr><tr><td colspan="2">' + (feature.properties['Settlement'] !== null ? Autolinker.link(String(feature.properties['Settlement'])) : '') + '</td></tr></table>';
             layer.bindPopup(popupContent);
         }
-
         function doStyleibadanschools0() {
             return {
                 radius: 4.0,
@@ -113,7 +105,6 @@
             pointToLayer: doPointToLayeribadanschools0
             });
         layerOrder[layerOrder.length] = json_ibadanschools0JSON;
-
         bounds_group.addLayer(json_ibadanschools0JSON);
         initialOrder[initialOrder.length] = json_ibadanschools0JSON;
         feature_group.addLayer(json_ibadanschools0JSON);
@@ -133,7 +124,6 @@
             var popupContent = '<table><tr><td colspan="2">' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td></tr><tr><td colspan="2">' + (feature.properties['count'] !== null ? Autolinker.link(String(feature.properties['count'])) : '') + '</td></tr><tr><td colspan="2">' + (feature.properties['scale'] !== null ? Autolinker.link(String(feature.properties['scale'])) : '') + '</td></tr><tr><td colspan="2">' + (feature.properties['distance'] !== null ? Autolinker.link(String(feature.properties['distance'])) : '') + '</td></tr></table>';
             layer.bindPopup(popupContent);
         }
-
         function doStyleCluster1() {
             return {
                 radius: 16.0,
@@ -155,7 +145,6 @@
             pointToLayer: doPointToLayerCluster1
             });
         layerOrder[layerOrder.length] = json_Cluster1JSON;
-
         bounds_group.addLayer(json_Cluster1JSON);
         initialOrder[initialOrder.length] = json_Cluster1JSON;
         feature_group.addLayer(json_Cluster1JSON);
