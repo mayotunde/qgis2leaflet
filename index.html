@@ -159,6 +159,8 @@
         var baseMaps = {'OSM': basemap0};
         L.control.layers(baseMaps,{'<img src="https://cdn.rawgit.com/mayotunde/qgis2leaflet/master/Cluster1.png" /> Cluster': json_Cluster1JSON,'<img src="https://cdn.rawgit.com/mayotunde/qgis2leaflet/master/ibadanschools0.png" /> ibadan_schools': json_ibadanschools0JSON,},{collapsed:false}).addTo(map);
         L.control.scale({options: {position: 'bottomleft', maxWidth: 100, metric: true, imperial: false, updateWhenIdle: false}}).addTo(map);
+              stackLayers();
+        map.on('overlayadd');
                 </script>
     </body>
 </html>
