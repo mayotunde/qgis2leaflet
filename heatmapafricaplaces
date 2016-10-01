@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="https://npmcdn.com/leaflet@0.7.7/dist/leaflet.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/mayotunde/qgis2leaflet/master/qgis2web.css">
+        <link rel="stylesheet" href="https://cdn.rawgit.com/mayotunde/qgis2leaflet/master/label.css" />
+        <link rel="stylesheet" href="https://cdn.rawgit.com/mayotunde/qgis2leaflet/master/MarkerCluster.css" />
+        <link rel="stylesheet" href="https://cdn.rawgit.com/mayotunde/qgis2leaflet/master/MarkerCluster.Default.css" />
+        <link rel="stylesheet" href="https://cdn.rawgit.com/mayotunde/qgis2leaflet/master/Control.OSMGeocoder.css" />
+        <script src="https://npmcdn.com/leaflet@0.7.7/dist/leaflet.js"></script>
+        <script src="https://cdn.rawgit.com/mayotunde/qgis2leaflet/master/OSMBuildings-Leaflet.js"></script>
+        <script src="https://cdn.rawgit.com/mayotunde/qgis2leaflet/master/leaflet-hash.js"></script>
+        <script src="https://cdn.rawgit.com/mayotunde/qgis2leaflet/master/label.js"></script>
+        <script src="https://cdn.rawgit.com/mayotunde/qgis2leaflet/master/Autolinker.min.js"></script>
+        <script src="https://k4r573n.github.io/leaflet-control-osm-geocoder/Control.OSMGeocoder.js"></script>
+        <script src="https://cdn.rawgit.com/mayotunde/qgis2leaflet/master/leaflet.markercluster.js"></script>
+        <title></title>
+    </head>
+    <body>
+        <div id="map" style='width:700px;height:500px'>
+        </div>
+        <script src="https://cdn.rawgit.com/mayotunde/qgis2leaflet/master/json_africaplaces1.js"></script>
+        <script>
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:22, minZoom:1
+        }).fitBounds([[-41.3609357277,-30.1207208735],[38.007103421,141.445529166]]);
+        var hash = new L.Hash(map);
+                map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
+        var feature_group = new L.featureGroup([]);
+        var bounds_group = new L.featureGroup([]);
+        var raster_group = new L.LayerGroup([]);
+        var basemap0 = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://mapsnigeriainitiative.com">mapsnigeriainitiative</a> contributors,<a href="http://creativecommons.org/licenses/by-
+
+sa/2.0/">CC-BY-SA</a>,<a href="http://openstreetmaps.org">openstreetmaps</a>',
+            maxZoom: 28
+        });
+        basemap0.addTo(map);
+        var initialOrder = new Array();
+        var layerOrder = new Array();
+        function stackLayers() {
+            for (index = 0; index < initialOrder.length; index++) {
+                map.removeLayer(initialOrder[index]);
+                map.addLayer(initialOrder[index]);
+            }
+        }
+        function restackLayers() {
+            for (index = 0; index < layerOrder.length; index++) {
+                layerOrder[index].bringToFront();
+            }
+        }
+        layerControl = L.control.layers({},{},{collapsed:false});
+        function geoJson2heat(geojson, weight) {
+          return geojson.features.map(function(feature) {
+            return [
+              feature.geometry.coordinates[1],
+              feature.geometry.coordinates[0],
+              feature.properties[weight]
+            ];
+          });
+        }
+        var img_heatlayer0 = 'https://cdn.rawgit.com/mayotunde/qgis2leaflet/master/json_heatlayer0.png';
+        var img_bounds_heatlayer0 = [[-36.3382715961,-26.8087463075],[39.250337117,59.3622676255]];
+        var overlay_heatlayer0 = new L.imageOverlay(img_heatlayer0, img_bounds_heatlayer0);
+        bounds_group.addLayer(overlay_heatlayer0);
+        layerOrder[layerOrder.length] = overlay_heatlayer0;
+        raster_group.addLayer(overlay_heatlayer0);
+        function pop_africaplaces1(feature, layer) {
+            var popupContent = '<table><tr><td colspan="2">' + (feature.properties['FID'] !== null ? Autolinker.link(String(feature.properties['FID'])) : '') + 
+
+'</td></tr></table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function doStyleafricaplaces1() {
+            return {
+                radius: 4.0,
+                fillColor: '#ff0b0b',
+                color: '#606f55',
+                weight: 0.0,
+                opacity: 0.78,
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                fillOpacity: 0.78
+            }
+        }
+        function doPointToLayerafricaplaces1(feature, latlng) {
+            return L.circleMarker(latlng, doStyleafricaplaces1())
+        }
+        var json_africaplaces1JSON = new L.geoJson(json_africaplaces1, {
+            onEachFeature: pop_africaplaces1, 
+            pointToLayer: doPointToLayerafricaplaces1
+            });
+        layerOrder[layerOrder.length] = json_africaplaces1JSON;
+
+        bounds_group.addLayer(json_africaplaces1JSON);
+        initialOrder[initialOrder.length] = json_africaplaces1JSON;
+        feature_group.addLayer(json_africaplaces1JSON);
+        raster_group.addTo(map);
+        feature_group.addTo(map);
+        var osmGeocoder = new L.Control.OSMGeocoder({
+            collapsed: false,
+            position: 'topright',
+            text: 'Search',
+        });
+        osmGeocoder.addTo(map);
+        var baseMaps = {'OSM': basemap0};
+        L.control.layers(baseMaps,{'<img src="https://cdn.rawgit.com/mayotunde/qgis2leaflet/master/africaplaces1.png" /> africaplaces': 
+
+json_africaplaces1JSON,"heatlayer": overlay_heatlayer0,},{collapsed:false}).addTo(map);
+        stackLayers();
+        map.on('overlayadd', restackLayers);
+        </script>
+    </body>
+</html>
