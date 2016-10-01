@@ -17,7 +17,7 @@
         <script src="https://cdn.rawgit.com/mayotunde/qgis2leaflet/master/leaflet-hash.js"></script>
         <script src="https://cdn.rawgit.com/mayotunde/qgis2leaflet/master/label.js"></script>
         <script src="https://cdn.rawgit.com/mayotunde/qgis2leaflet/master/Autolinker.min.js"></script>
-        <script src="https://k4r573n.github.io/leaflet-control-osm-geocoder/Control.OSMGeocoder.js"></script>
+        <script src="http://k4r573n.github.io/leaflet-control-osm-geocoder/Control.OSMGeocoder.js"></script>
         <script src="https://cdn.rawgit.com/mayotunde/qgis2leaflet/master/leaflet.markercluster.js"></script>
         <title></title>
     </head>
